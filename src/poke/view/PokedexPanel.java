@@ -11,7 +11,7 @@ public class PokedexPanel extends JPanel
 	private SpringLayout appLayout;
 	
 	private JButton changeButton;
-	private JComboBox pokedexDropdown;
+	private JComboBox<String> pokedexDropdown;
 	
 	private JTextField numberField;
 	private JTextField nameField;
@@ -35,6 +35,8 @@ public class PokedexPanel extends JPanel
 		
 		this.appLayout = new SpringLayout();
 		
+		pokedexDropdown = new JComboBox<String>();
+		
 		numberField = new JTextField("0");
 		nameField = new JTextField("My pokename");
 		evolveField = new JTextField("false");
@@ -43,16 +45,23 @@ public class PokedexPanel extends JPanel
 		healthField = new JTextField("0");
 		
 		healthLabel = new JLabel("This pokemon health is");
-		numberLabel = new JLabel("This pokemon number is");		
+		numberLabel = new JLabel("This pokemon number is");
 		evolveLabel = new JLabel("This pokemon can evolve");
 		enhanceLabel = new JLabel("This pokemon enchancement level is");
 		attackLabel = new JLabel("This pokemon attack level is");
 		nameLabel = new JLabel("My name is");
 		imageLabel = new JLabel("Pokemon goes here");
 		
+		setupDropdown();
 		setupLayout();
 		setupListeners();
 		setupPanel();
+	}
+	
+	private void setupDropdown()
+	{
+		DefaultComboBoxModel<String> temp = new DefaultComboBoxModel<String>(appController.buildPokedexTest());
+		pokedexDropdown.setModel(temp);
 	}
 	
 	private void setupLayout()
@@ -82,6 +91,48 @@ public class PokedexPanel extends JPanel
 	
 	private void setupPanel()
 	{
+		appLayout.putConstraint(SpringLayout.NORTH, pokedexDropdown, 247, SpringLayout.NORTH, this);
+		appLayout.putConstraint(SpringLayout.WEST, pokedexDropdown, 31, SpringLayout.WEST, this);
 		
+		appLayout.putConstraint(SpringLayout.EAST, nameField, -67, SpringLayout.EAST, this);
+		appLayout.putConstraint(SpringLayout.EAST, numberField, 0, SpringLayout.EAST, nameField);
+		
+		appLayout.putConstraint(SpringLayout.EAST, evolveField, -67, SpringLayout.EAST, this);
+		
+		appLayout.putConstraint(SpringLayout.EAST, attackField, -67, SpringLayout.EAST, this);
+		
+		appLayout.putConstraint(SpringLayout.EAST, enhancementField, -67, SpringLayout.EAST, this);
+		
+		appLayout.putConstraint(SpringLayout.EAST, healthField, -67, SpringLayout.EAST, this);
+		
+		appLayout.putConstraint(SpringLayout.EAST, healthLabel, -132, SpringLayout.WEST, healthField);
+		appLayout.putConstraint(SpringLayout.NORTH, healthField, -5, SpringLayout.NORTH, healthLabel);
+		appLayout.putConstraint(SpringLayout.NORTH, healthLabel, 39, SpringLayout.NORTH, this);
+		
+		appLayout.putConstraint(SpringLayout.EAST, numberLabel, -132, SpringLayout.WEST, numberField);
+		appLayout.putConstraint(SpringLayout.NORTH, numberField, -5, SpringLayout.NORTH, numberLabel);
+		appLayout.putConstraint(SpringLayout.NORTH, numberLabel, 101, SpringLayout.NORTH, this);
+		appLayout.putConstraint(SpringLayout.SOUTH, healthLabel, -46, SpringLayout.NORTH, numberLabel);
+		
+		appLayout.putConstraint(SpringLayout.NORTH, evolveField, -5, SpringLayout.NORTH, evolveLabel);
+		appLayout.putConstraint(SpringLayout.NORTH, evolveLabel, 163, SpringLayout.NORTH, this);
+		appLayout.putConstraint(SpringLayout.EAST, evolveLabel, -218, SpringLayout.EAST, this);
+		appLayout.putConstraint(SpringLayout.SOUTH, numberLabel, -46, SpringLayout.NORTH, evolveLabel);
+		
+		appLayout.putConstraint(SpringLayout.NORTH, enhancementField, -5, SpringLayout.NORTH, enhanceLabel);
+		appLayout.putConstraint(SpringLayout.NORTH, enhanceLabel, 46, SpringLayout.SOUTH, evolveLabel);
+		appLayout.putConstraint(SpringLayout.EAST, enhanceLabel, -218, SpringLayout.EAST, this);
+		
+		appLayout.putConstraint(SpringLayout.NORTH, attackField, -5, SpringLayout.NORTH, attackLabel);
+		appLayout.putConstraint(SpringLayout.EAST, attackLabel, -218, SpringLayout.EAST, this);
+		appLayout.putConstraint(SpringLayout.NORTH, attackLabel, 46, SpringLayout.SOUTH, enhanceLabel);
+		
+		appLayout.putConstraint(SpringLayout.NORTH, nameField, -5, SpringLayout.NORTH, nameLabel);
+		appLayout.putConstraint(SpringLayout.WEST, nameField, 53, SpringLayout.EAST, nameLabel);
+		appLayout.putConstraint(SpringLayout.NORTH, nameLabel, 46, SpringLayout.SOUTH, attackLabel);
+		appLayout.putConstraint(SpringLayout.EAST, nameLabel, -218, SpringLayout.EAST, this);
+		
+		appLayout.putConstraint(SpringLayout.WEST, imageLabel, 0, SpringLayout.WEST, pokedexDropdown);
+		appLayout.putConstraint(SpringLayout.SOUTH, imageLabel, -39, SpringLayout.NORTH, pokedexDropdown);
 	}
 }
