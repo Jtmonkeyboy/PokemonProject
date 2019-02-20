@@ -15,10 +15,13 @@ import javax.swing.JOptionPane;
 public class PokedexController
 {
 	private ArrayList<Pokemon> pokemonList;
+	private PokedexFrame appFrame;
 	
 	public PokedexController()
 	{
 		pokemonList = new ArrayList<Pokemon>();
+		addPokemon();
+		appFrame = new PokedexFrame(this);
 	}
 	
 	public void start()
@@ -28,7 +31,7 @@ public class PokedexController
 	
 	public void addPokemon()
 	{
-		
+		pokemonList.add(new Charizard());
 	}
 	
 	public ArrayList<Pokemon> getPokemonList()

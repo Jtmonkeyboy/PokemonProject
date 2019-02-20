@@ -2,9 +2,10 @@ package poke.model;
 
 public class Charizard extends Pokemon implements Fire
 {
-	public Charizard(int number, String name)
+	
+	public Charizard()
 	{
-		super(number, name);
+		super(6, "Charizard");
 	}
 	
 	public int fireBlast()
