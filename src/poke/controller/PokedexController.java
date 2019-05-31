@@ -32,6 +32,10 @@ public class PokedexController
 	public void addPokemon()
 	{
 		pokemonList.add(new Charizard());
+		pokemonList.add(new Pikachu());
+		pokemonList.add(new Squirtle());
+		pokemonList.add(new Mewtwo());
+		pokemonList.add(new Venusaur());
 	}
 	
 	public ArrayList<Pokemon> getPokemonList()
@@ -55,6 +59,20 @@ public class PokedexController
 			current.setName(data[3]);
 			current.setCanEvolve(Boolean.parseBoolean(data[4]));
 		}
+	}
+	
+	public String[] getPokeData(int index)
+	{
+		String[] stats = new String[6];
+		Pokemon selection = pokemonList.get(index);
+		stats[0] = Integer.toString(selection.getAttackPoints());
+		stats[1] = Double.toString(selection.getEnhancementModifier());
+		stats[2] = Integer.toString(selection.getHealthPoints());
+		stats[3] = selection.getName();
+		stats[4] = Boolean.toString(selection.isCanEvolve());
+		stats[5] = selection.getNumber() + "";
+		
+		return stats;
 	}
 	
 	public String[] buildPokedexTest()

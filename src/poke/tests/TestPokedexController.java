@@ -62,12 +62,5 @@ class TestPokedexController
 		assertFalse(tested.isInt("3.2"), "Doubles are not ints");
 		assertTrue(tested.isInt("9"), "9 is an integer number");
 	}
-	
-	@Test
-	void testFrame()
-	{
-		assertNotNull(tested.getFrame(), "Your app needs a GUI frame");
-		assertTrue(tested.getFrame() instanceof PokedexFrame, "Your app needs a PokedexFrame");
-	}
 
 }

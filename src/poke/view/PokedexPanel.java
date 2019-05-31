@@ -28,6 +28,8 @@ public class PokedexPanel extends JPanel
 	private JLabel healthLabel;
 	private JLabel imageLabel;
 	
+	private ImageIcon pokemonIcon;
+	
 	public PokedexPanel(PokedexController appController)
 	{
 		super();
@@ -37,6 +39,7 @@ public class PokedexPanel extends JPanel
 		
 		pokedexDropdown = new JComboBox<String>();
 		
+		changeButton = new JButton("Click me");
 		numberField = new JTextField("0");
 		nameField = new JTextField("My pokename");
 		evolveField = new JTextField("false");
@@ -50,7 +53,13 @@ public class PokedexPanel extends JPanel
 		enhanceLabel = new JLabel("This pokemon enchancement level is");
 		attackLabel = new JLabel("This pokemon attack level is");
 		nameLabel = new JLabel("My name is");
-		imageLabel = new JLabel("Pokemon goes here");
+		imageLabel = new JLabel("Pokemon goes here", pokemonIcon, JLabel.CENTER);
+		
+		String path = "/poke/view/images/";
+		String defaultName = "pokeball";
+		String extension = ".jpeg";
+		
+		pokemonIcon = new ImageIcon(getClass().getResource(path+defaultName+extension));
 		
 		setupDropdown();
 		setupLayout();
@@ -82,11 +91,74 @@ public class PokedexPanel extends JPanel
 		this.add(attackLabel);
 		this.add(nameLabel);
 		this.add(imageLabel);
+		
+		imageLabel.setVerticalTextPosition(JLabel.BOTTOM);
+		//imageLabel.setHorizontalTextPostion(JLabel.CENTER);
 	}
 	
 	private void setupListeners()
 	{
+		changeButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent click)
+			{
+				sendDataToController();
+			}
+		});
 		
+		pokedexDropdown.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent click)
+			{
+				String name = pokedexDropdown.getSelectedItem().toString();
+				updateFields(pokedexDropdown.getSelectedIndex());
+				changeImageDisplay(name);
+			}
+		});
+	}
+	
+	private void sendDataToController()
+	{
+		int index = pokedexDropdown.getSelectedIndex();
+		
+		if(appController.isInt(attackField.getText()) && appController.isDouble(enhancementField.getText()) && appController.isInt(healthField.getText()))
+		{
+			String [] data = new String [5];
+			data[0] = attackField.getText();
+			data[1] = enhancementField.getText();
+			data[2] = healthField.getText();
+			data[3] = nameField.getText();
+			data[4] = evolveField.getText();
+			
+			appController.updatePokemon(index, data);
+		}
+	}
+	
+	private void updateFields(int index)
+	{
+		String[] data = appController.getPokeData(index);
+		attackField.setText(data[0]);
+		enhancementField.setText(data[1]);
+		healthField.setText(data[2]);
+		nameField.setText(data[3]);
+		evolveField.setText(data[4]);
+		numberField.setText(data[5]);
+	}
+	
+	private void changeImageDisplay(String name)
+	{
+		String path = "/poke/view/images/";
+		String defaultName = "pokeball";
+		String extension = ".jpeg";
+		
+		try
+		{
+			pokemonIcon = new ImageIcon(getClass().getResource(path+name.toLowerCase() + extension));
+		}
+		catch(NullPointerException missingFile)
+		{
+			pokemonIcon = new ImageIcon(getClass().getResource(path+defaultName+extension));
+		}
+		imageLabel.setIcon(pokemonIcon);
+		repaint();
 	}
 	
 	private void setupPanel()

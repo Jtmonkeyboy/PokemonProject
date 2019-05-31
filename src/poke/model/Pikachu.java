@@ -2,9 +2,9 @@ package poke.model;
 
 public class Pikachu extends Pokemon implements Lightning
 {
-	public Pikachu(int number, String name)
+	public Pikachu()
 	{
-		super(number, name);
+		super(25, "Pikachu");
 	}
 	
 	public boolean thunderbolt()
